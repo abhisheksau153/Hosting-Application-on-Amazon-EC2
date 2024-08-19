@@ -1,0 +1,37 @@
+# Find the current user
+current_user=$(whoami)
+
+# Find the primary group of the current user
+current_group=$(id -gn)
+
+# Display the values (just for verification)      # optional command
+echo "User: $current_user"
+echo "Group: $current_group"
+
+# Update the systemd service file with the correct user and group
+
+sudo tee /etc/systemd/system/filebrowser.service > /dev/null <<EOF
+[Unit]
+Description=Filebrowser
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/filebrowser -r /mnt/data --address 0.0.0.0 --port 80 --database /mnt/data/filebrowser.db
+Restart=always
+User=$current_user
+Group=$current_group
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Reload systemd to apply the new service file
+sudo systemctl daemon-reload
+
+# Restart the Filebrowser service
+sudo systemctl start filebrowser
+
+# Check the status to ensure it is running
+sudo systemctl status filebrowser

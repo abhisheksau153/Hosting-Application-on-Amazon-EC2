@@ -1,0 +1,25 @@
+Commands
+
+ 1. sudo su -    # become a root user
+ 2. sudo yum update  # to update/check your command prompt is updated
+ 3. mkdir mnt/data   # make a directory 
+ 
+# Command to mount the volume 
+  1. sudo mkfs -t ext4 /dev/xvdf
+  2. sudo mkdir /mnt/data
+  3. sudo mount /dev/xvdf /mnt/data
+  4. sudo chmod 777 /mnt/data   # To adjust permission to needed
+
+
+# Command for installing Filebrowser application 
+   1. mkdir temp   #Create a temp directory
+   2. cd temp
+   3. curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash
+       filebrowser -r /path/to/your/files                   ## Note - change file path with your path
+    
+      # example command -
+	 curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | 
+          bash filebrowser -r /mnt/data
+
+# Also run the configuration file for Filebrowser application on your server 
+## configuration file attachted in repo.
